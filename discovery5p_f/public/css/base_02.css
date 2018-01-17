@@ -1,0 +1,8 @@
+/* base.css */
+/* 또 다른 css파일 링크하기
+아직 속도 느린 실무에서 안하는 방법. 익스 하위버전 안먹힘 */
+@import url("./src/wrap_01.css");
+@import url("./src/headBox_01.css");
+@import url("./src/main_content_02.css");
+@import url("./src/footBox_01.css");
+

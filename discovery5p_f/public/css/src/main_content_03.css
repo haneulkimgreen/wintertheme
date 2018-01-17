@@ -1,0 +1,50 @@
+.gnb>ul>li:nth-child(2){border-bottom: 15px solid #d5d5d5;}
+#contentBox{width: 960px; height: 730px; margin: 0 auto; padding: 40px 0; box-sizing: border-box;}
+#contentBox>h2{font-size: 30px; margin-bottom: 40px;}
+.banner_01{width: 100%; height: 300px;
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-image: url(../../img/3p/ba_01.jpg);
+}
+#contentBox>ul>li{list-style:disc;}
+#contentBox>ul{margin-top: 40px; margin-left: 20px;}
+#contentBox>ul>li{margin-bottom: 20px; height: 20px;}
+#contentBox>ul>li>p{font-size: 20px;line-height: 20px;}
+
+#safeBox{width: 960px; height: 1400px; margin: 0 auto; padding-bottom: 40px; box-sizing: border-box;}
+#safeBox>h2{font-size: 30px; margin-bottom: 40px; color: #f00;}
+.banner_02{width: 100%; height: 300px;
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-image: url(../../img/3p/ba_02.jpg);
+}
+.r_bar{width: 100%; height: 50px; background-color: #f00;}
+.d_mark{width: 150px; height: 150px;
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-image: url(../../img/3p/warning.svg);
+float:right; margin-top: 50px;}
+#safeBox>ul{margin-top: 40px;}
+#safeBox>ul>li{width: 410px; height: 420px; background-color: #D5E1ED; padding: 20px; box-sizing: border-box; float:left;}
+#safeBox>ul>li:nth-of-type(2n){margin-left: 140px;}
+#safeBox>ul>li:nth-of-type(3),
+#safeBox>ul>li:nth-of-type(4){margin-top: 40px;}
+#safeBox>ul>li>p:nth-of-type(1){font-size: 26px;color: #19355B; font-weight: bold; margin-bottom: 20px;}
+#safeBox>ul>li>p:nth-of-type(2){font-size: 26px; font-weight: bold; margin-bottom: 50px;}
+#safeBox>ul>li>p:nth-of-type(3){font-size: 20px;width: 150px; float: left;}
+#safeBox>ul>li>div{width: 200px; height: 200px; border-radius: 50%; background-color: #ddd; float:right;
+background-repeat: no-repeat;
+background-size: 150px 150px;
+background-position: center;
+}
+#safeBox>ul>li:nth-of-type(1)>div{background-image: url(../../img/3p/li_01.svg);
+}
+#safeBox>ul>li:nth-of-type(2)>div{background-image: url(../../img/3p/li_02.svg);
+}
+#safeBox>ul>li:nth-of-type(3)>div{background-image: url(../../img/3p/li_03.svg);
+}
+#safeBox>ul>li:nth-of-type(4)>div{background-image: url(../../img/3p/li_04.svg);
+}
