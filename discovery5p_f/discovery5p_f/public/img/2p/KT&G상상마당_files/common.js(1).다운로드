@@ -1,0 +1,544 @@
+﻿$(document).ready(function() {
+    $(".ssmdEditor").each(function(idx, item) {
+    	var id = $(item).attr("id");
+
+    	var html = CKEDITOR.inline(id).getData();
+
+    	$(item).closest("div").html(html);
+    });
+
+    /* filel upload check */
+    $("form input:file").on("change", function(e) {
+    	var uploadFileList = $(this).prop("accept");
+
+    	if (uploadFileList.isEmpty() == true) {
+    		return false;
+    	}
+
+    	var filePath = $(this).val();
+
+    	if (filePath.isEmpty() == true){
+    		return false;
+    	}
+
+        var pathMiddle = filePath.lastIndexOf(".");
+        var pathEnd = filePath.length;
+        var extName = "." + filePath.substring(pathMiddle+1, pathEnd);
+
+    	var arrUploadFileList = uploadFileList.split(",");
+
+    	var bAcceptExt = false;
+
+    	for (var i = 0; i < arrUploadFileList.length; i++) {
+    		if (extName == arrUploadFileList[i].trim()) {
+    			bAcceptExt = true;
+    			break;
+    		}
+    	}
+
+    	if (bAcceptExt == false) {
+    		showMsg("허용되지 않은 파일 형식입니다.(" + uploadFileList + " 허용가능)");
+    		$(this).val("");
+    		$(this).click();
+    		return false;
+    	}
+    });
+    
+    //url 복사
+    $("#shareUrl").bind('click',function(e) {
+    	// Prevents the default action to be triggered.
+    	e.preventDefault();
+    	
+    	/*
+    	var address = $("#urlData").val();
+    	$("#urlData").select();
+    	try { 
+    		var successful = document.execCommand('copy'); 
+    		alert("URL을 복사 하였습니다!");
+    	}catch (err) { 
+    		alert('이 브라우저는 지원하지 않습니다.') 
+    	}*/
+
+    	try { 
+	    	var $input = $("#urlData");
+	    	if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+	    	  var el = $input.get(0);
+	    	  var editable = el.contentEditable;
+	    	  var readOnly = el.readOnly;
+	    	  el.contentEditable = true;
+	    	  el.readOnly = false;
+	    	  var range = document.createRange();
+	    	  range.selectNodeContents(el);
+	    	  var sel = window.getSelection();
+	    	  sel.removeAllRanges();
+	    	  sel.addRange(range);
+	    	  el.setSelectionRange(0, 999999);
+	    	  el.contentEditable = editable;
+	    	  el.readOnly = readOnly;
+	    	} else {
+	    	  $input.select();
+	    	}
+	    	document.execCommand('copy');
+	    	
+	    	alert("URL을 복사 하였습니다!");
+	    	$input.blur();
+    	}catch (err) { 
+    		alert('이 브라우저는 지원하지 않습니다.') 
+    	}
+    	
+
+    });
+});
+
+/***********************************************************************
+설 명: form submit
+작성자: 장광오
+인 자:
+사용예: formSubmit("form1", "/show/createShow");
+************************************************************************/
+function formSubmit(formId, url) {
+    $("#" + formId).attr("action", url);
+    $("#" + formId).submit();
+}
+
+/***********************************************************************
+설 명: 문자열 null확인
+작성자: 장광오
+인 자:
+사용예:  str.lpad(2,0);
+ ************************************************************************/
+String.prototype.isEmpty = function(){
+    if (this == undefined || this == null || this.trim().length <= 0) {
+        return true;
+    }else {
+        return false;
+    }
+}
+
+/***********************************************************************
+설 명: 문자열 공백제거
+작성자: 양유빈
+인 자:
+사용예:  title.trim();
+************************************************************************/
+String.prototype.trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+};
+
+/***********************************************************************
+설 명: 특정문자열의 모든 Replace 수행
+작성자: 양유빈
+인 자: strValue1:대상 | strValue2 : 변경내용
+사용예:  title.replaceAll("a","b");
+************************************************************************/
+String.prototype.replaceAll = function (strValue1, strValue2) {
+    var strTemp = this;
+    strTemp = strTemp.replace(new RegExp(strValue1, "g"), strValue2);
+    return strTemp;
+};
+
+/***********************************************************************
+설 명: 이미지파일업로드
+작성자: 장광오
+인 자:
+사용예:  fileUpload("form1", "file, "callbackFunction")
+ ************************************************************************/
+function ssmd_fileUpload(formObjId, fileObjeName,  pCallbackName) {
+
+	if ($("#" + fileObjeName).val().isEmpty() == false) {
+	    $("#" + formObjId).ajaxForm({url : "/upload/attch/" + fileObjeName
+		    ,enctype : "multipart/form-data"
+	        ,success : function(res) {
+	        	window[pCallbackName](res);
+	        }
+	        ,error : function(result) {
+	            showMsg("파일업로드에 실패하였습니다.");
+	        }
+	    }).submit();
+
+	    $('#' + formObjId).ajaxFormUnbind();
+	}
+}
+
+
+/***********************************************************************
+설 명: form 필수값 체크
+작성자: 장광오
+인 자:
+사용예: validateRequiredValue("form1");
+************************************************************************/
+function validateRequiredValue(formId) {
+    var rtnVal = true;
+
+    $("#" + formId).find("label").each(function (idx) {
+        var strNone = $(this).closest("td").css("display");
+
+        if (strNone == "none") {
+            return false;
+        }
+
+        strNone = $(this).closest("tr").css("display");
+
+        if (strNone == "none") {
+            return false;
+        }
+
+        var strId = $(this).prop("for");
+        var strHead = $(this).text();
+
+        if ($(this).children().length > 0) {
+            var isCheck = $(this).find(".ftclr_area").size();
+
+            consoleLog(strId + " : " + isCheck);
+
+            if (isCheck > 0) {
+            	consoleLog(strId)
+                var chkTagName = $("#" + strId).prop("tagName");
+                if (chkTagName.toUpperCase() == "INPUT" || chkTagName.toUpperCase() == "SELECT") {
+                    var strNone = $("#" + strId).css("display");
+
+                    if (strNone != "none") {
+                        var chkVal = $("#" + strId).val();
+                        if (chkVal.trim() == "") {
+                            showMsg(strHead.replaceAll("\\*", " ").trim() + "은(는) 필수입력 값입니다.");
+                            $("#" + strId).focus();
+                            rtnVal = false;
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    return rtnVal;
+}
+
+function ssmd_dataBind(jsonData, pMode) {
+	if (pMode == undefined || pMode == null) {
+		pMode = "update";
+	}
+	var autoDataBind = new AutoDataBind(pMode);
+	autoDataBind.setModel(jsonData);
+}
+
+
+/************************************************************************
+설 명: 호출된 Json값을 Dom에 자동 할당
+작성자: 양유빈
+파라메터:
+사용예:
+var autoData_Bind=new AutoData_Bind("update");
+autoData_Bind.SetModel(DataSet);
+************************************************************************/
+function AutoDataBind(Mode)
+{
+    var mode=Mode==undefined ? "select" : Mode;
+    var JsonKey=new Array();
+    var _Json="";
+    //할당모델
+     this.setModel=function(Json)
+     {
+         if(Json==undefined || Json==null) return false;
+         //list 반환
+         if(Json.length>0)
+         {
+             _Json=Json[0];
+         }
+         else
+         {    //Object 반환시
+             _Json=Json;
+         }
+         for(var key in _Json){
+             JsonKey.push(key);
+         };
+         for(var i=0; i<JsonKey.length; i++)
+         {
+             var key=JsonKey[i];
+
+             var obj=$("#"+key);
+             var value=_Json[key];
+             if(value=="null" || value==null){
+                 value="";
+             }
+
+             if(obj.size()>0)
+             {
+                 var tag=obj.get(0).tagName.toUpperCase();
+                 switch(tag)
+                 {
+                    //필요에 따른 추가
+                     case "TD":
+                          $(obj).html(value);
+                          break;
+                     case "DIV":
+                    	 var childObj = $(obj).children("[name='" + key + "']");
+                    	 var childernLen = $(childObj).length;
+
+                    	 if (childernLen <= 0) {
+                    		 $(obj).html(value);
+                    	 }else {
+                    		 var chTagNm = $(childObj).eq(0).prop("type").toUpperCase();
+
+                    		 if (chTagNm == "RADIO") {
+                    			 $("input:radio[name='" + key + "']:radio[value='" + value + "']").attr("checked",true);
+                    		 }
+                    	 }
+                          break;
+                     case "SPAN":
+                         $(obj).html(value);
+                         break;
+                     case "SELECT":
+                         $(obj).val(value);
+                         $(obj).change();
+                         /*
+                         if(mode=="select")
+                         {
+                              var TextValue=$(String.format("select[name='{0}'] option:selected",key)).text();
+                              if(value == '' || value == null) {
+                                 $(obj).replaceWith('');
+                              } else {
+                                 $(obj).replaceWith(TextValue);
+                              }
+                         };*/
+                         break;
+                     case "RADIO" :
+                         $("input:radio[name='" + key + "']:radio[value='" + value + "']").attr("checked",true);
+                         break;
+                     case "TEXTAREA" :
+                        $('#' + key).html(value);
+                         break;
+                     default:
+                         if ((!/^(\d){8}$/.test(value)) == false) {
+                             if ($(obj).hasClass("datepicker-from") || $(obj).hasClass("datepicker-to") || $(obj).hasClass("datepicker")) {
+                                 var y = value.substr(0,4),
+                                 m = value.substr(4,2) - 1,
+                                 d = value.substr(6,2);
+                                 var dateObj = new Date(y,m,d);
+
+                                 value = dateObj.toString('yyyy.MM.dd');
+                             }
+                         }
+
+                         $(obj).val(value);
+                         break;
+                 };
+             }else {
+                 var obj=$("input:radio[name='" + key + "']");
+                 var value=_Json[key];
+                 if(value=="null" || value==null){
+                     value="";
+                 }
+
+                 if(obj.size()>0) {
+                     $("input:radio[name='" + key + "']:radio[value='" + value + "']").attr("checked",true);
+                 }
+
+             }
+         }
+
+        try {
+            $(".datepicker-from, .datepicker-to").change();
+        } catch (e) {
+
+        }
+
+     };
+     this.getModel=function()
+     {
+
+     };
+}
+
+/***********************************************************************
+설 명: 메세지
+작성자: 장광오
+인 자:
+사용예: showMsg("메세지");
+************************************************************************/
+function showMsg(strMsg) {
+    alert(strMsg);
+}
+
+/***********************************************************************
+설 명: Confirm
+작성자: 장광오
+인 자:
+사용예: showMsg("메세지");
+ ************************************************************************/
+function showConfirm(strMsg) {
+    return confirm(strMsg);
+}
+
+/***********************************************************************
+설 명: ajax 호출
+작성자: 장광오
+인 자:
+사용예: ssmd_ajax("/url", {param1:test}, "callbak_function", true);
+ ************************************************************************/
+function ssmd_ajax(pUrl, pParamJson, pCallbakFunctionName, pAsync) {
+	if (pAsync == undefined) {
+		pAsync = true;
+	}
+
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("AJAX", true);
+        },
+        error: function(xhr, status, err) {
+            if (xhr.status == 401) {
+                alert("인증기간이 만료되었습니다.");
+                location.href="/login/kocisdbLoginUsr.do";
+                return false;
+            } else if (xhr.status == 403) {
+                alert("요청 페이지가 존재하지 않습니다.");
+                return false;
+            } else {
+                alert("예외가 발생했습니다. 관리자에게 문의하세요.");
+                return false;
+            }
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url:pUrl,
+        data:pParamJson,
+        dataType: 'json',
+        async: pAsync,
+        success: function(res) {
+        	try {
+        		window[pCallbakFunctionName](res);
+        	}catch (e) {
+        		alert(e);
+        	}
+        }
+  });
+}
+
+function consoleLog(msg) {
+    console.log(msg);
+}
+
+/***********************************************************************
+함수 이름: gfn_osInfo
+함수 설명: 웹 모바일환경 구분
+인자 없음
+리턴: ret
+            isMobile : 모바일 웹구분 ( Y 모바일, N 웹 )
+            osScn    : 모바일기기 ( ios 아이폰, android 안드로이드 )
+사용예:
+        var osInfo = gfn_osInfo();
+
+        var isMobile = osInfo.isMobile;
+        var osScn    = osScn;
+************************************************************************/
+function gfn_osInfo(){
+    var ret = {
+                isMobile : ""
+              , osScn    : ""
+    };
+
+    var filter   = "win16|win32|win64|mac|macintel";
+    var iosFiler = "iphone|ipad|ipob";
+
+    if( navigator.platform ){
+        if( filter.indexOf(navigator.platform.toLowerCase()) < 0 ){
+            ret.isMobile = "Y";
+
+            if( iosFiler.indexOf(navigator.platform.toLowerCase()) > -1 ){
+                ret.osScn = "ios";
+            } else {
+                ret.osScn = "android";
+            }
+        } else {
+            ret.isMobile = "N";
+        }
+    }
+
+    return ret;
+}
+
+/***********************************************************************
+설 명: CKEDITOR
+작성자: 서정훈
+인 자:	textarea id
+사용예: var editor = initCKEditor('text');
+************************************************************************/
+function initCKEditor(textAreaId){
+    var editor = CKEDITOR.replace(textAreaId,{
+        plugins : 'dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,clipboard,button,panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,div,resize,toolbar,elementspath,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,forms,format,horizontalrule,htmlwriter,iframe,wysiwygarea,image,indent,indentblock,indentlist,smiley,justify,menubutton,language,link,list,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,scayt,stylescombo,tab,table,tabletools,undo,wsc,lineutils,widget,filetools,notification,notificationaggregator,uploadwidget,uploadimage,youtube,quicktable',
+        lang : 'ko',
+        skin : 'bootstrapck',
+        filebrowserImageUploadUrl: '/upload/ck',
+        height : 450,
+        allowedContent : true,
+        toolbarGroups : [
+                { name: 'document', groups: ['document', 'doctools' ] },
+                { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+                { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+                { name: 'forms', groups: [ 'forms' ] },
+                '/',
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+                { name: 'links', groups: [ 'links' ] },
+                { name: 'insert', groups: [ 'insert' ] },
+                '/',
+                { name: 'styles', groups: [ 'styles' ] },
+                { name: 'colors', groups: [ 'colors' ] },
+                { name: 'tools', groups: [ 'tools' ] },
+                { name: 'others', groups: [ 'others' ] },
+                { name: 'about', groups: [ 'about' ] }
+          ],
+          removeButtons :  'About,Flash,Save'
+
+    });
+
+    editor.on('dialogDefinition', function(e) {
+        if (e.data.name == 'image') {
+            var dialog = e.data.definition;
+            oldOnShow = dialog.onShow;
+            dialog.onShow = function() {
+                 oldOnShow.apply(this, arguments);
+                 this.selectPage('Upload');
+            };
+        }
+    });
+
+    return editor;
+}
+//트윗 공유
+function shareTwitter(){
+	var shareURL = 'https://twitter.com/intent/tweet?text='+ encodeURIComponent($( 'meta[property="og:title"]' ).attr('content') + '\n\n') +'&url=' + encodeURI(location.href);
+
+	var width=400, height=500;
+	var left = (screen.availWidth - width)/2;
+	var top = (screen.availHeight - height)/2;
+	var specs = "width=" + width;
+	specs += ",height=" + height;
+	specs += ",left=" + left;
+	specs += ",top=" + top;
+
+	movePage(shareURL, "Y", specs);
+
+	//window.open(shareURL, "트위로 공유하기", specs);
+}
+//페이스북 공유
+function shareFB(){
+	var shareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(location.href);
+	var width=555, height=400;
+	var left = (screen.availWidth - width)/2;
+	var top = (screen.availHeight - height)/2;
+	var specs = "width=" + width;
+	specs += ",height=" + height;
+	specs += ",left=" + left;
+	specs += ",top=" + top;
+
+	movePage(shareURL, "Y", specs);
+
+	//window.open(shareURL, "페이스북으로 공유하기", specs);
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
