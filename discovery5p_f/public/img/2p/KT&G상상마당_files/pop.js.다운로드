@@ -1,0 +1,105 @@
+$(document).ready(function(){
+
+	// 지역 class 체크
+	var classChk = $('#wrap');
+	if (classChk.hasClass('area_hd')){
+		$('.pop_wrap').addClass('area_hd');
+	} else if (classChk.hasClass('area_ns')){
+		$('.pop_wrap').addClass('area_ns');
+	} else if (classChk.hasClass('area_cc')){
+		$('.pop_wrap').addClass('area_cc');
+	} else if (classChk.hasClass('area_dc')){
+		$('.pop_wrap').addClass('area_dc');
+	} else if (classChk.hasClass('area_at')){
+		$('.pop_wrap').addClass('area_at');
+	} else if (classChk.hasClass('area_etc')){
+		$('.pop_wrap').addClass('area_etc');
+	};
+
+	// 로그인
+	$("#popcall--login").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$('#allMenuGnb').bPopup({
+			speed: 400,
+			transition: 'slideIn',
+			transitionClose: 'slideIn'
+		}).close();
+		$("body").css({"height": "auto"}).removeClass("overhd");
+		$("#allMenuGnb").attr("data-allgnb","close");
+		$("#popLogin").bPopup({
+            positionStyle: 'fixed',
+			speed: 500,
+			transition: 'slideDown',
+			transitionClose: 'slideDown'
+		});
+	});
+
+	// 강사/작가 정보 팝업제어
+	$(".popcall--teacherinfo").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+
+		var targetId = $(this).prop("target");
+
+		if (targetId != '') {
+			$("#" + targetId).bPopup();
+		}else {
+			$("#popTeacherDetail").bPopup();
+		}
+	});
+	// 이벤트 응모하기 팝업제어
+	$(".popcall--eventapply").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		if(checkAuth("")){//로그인이 되어 있다면
+		e.preventDefault();
+		$("#eventApply").bPopup();
+		}
+	});
+	// 전시 예매하기 팝업제어
+	$(".popcall--eventbooking").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$("#popBooking").bPopup();
+	});
+	// SNS 공유하기 팝업제어
+	$(".popcall--snsshare").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$("#popSnsshare").bPopup();
+	});
+	// SNS 공유하기 URL복사하기
+	$(".popcall--urlcopy").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$("#popUrlcopy").bPopup();
+	});
+	// 마이상상 결제 및 취소 상세정보 팝업제어
+	$(".popcall--payment").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$("#popPayment").bPopup();
+		$("#scrollbarPayment").mCustomScrollbar({
+			theme: "dark-thick",
+			keyboard:{
+				enable: true
+			}
+		});
+	});
+	// 마이상상 스탬프 카드 알림창
+	$(".popcall--alert").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$("#alertAppurl").bPopup();
+	});
+	// 오시는 길 팝업
+	$(".popcall--waytoinfo").bind('click',function(e) {
+		// Prevents the default action to be triggered.
+		e.preventDefault();
+		$("#popWayToInfo").bPopup({
+			follow:[true, false],
+			positionStyle:'fixed'
+		});
+
+	});
+});

@@ -1,0 +1,76 @@
+/* main_content_03.css */
+/* headBox */
+.gnb>ul>li:nth-of-type(2){background-color: #fff;}
+.gnb>ul>li:nth-of-type(2)>a{color: #000;}
+.gnb_02>ul>li:nth-of-type(2){background-color: #fff; box-shadow: 5px 10px 10px #777;}
+.gnb_02>ul>li:nth-of-type(2)>a{color: #000;}
+/* //headBox */
+/* contentBox */
+#contentBox{width: 960px; width: 60rem; height: auto; margin: 0 auto; padding: 100px 0; padding: 6.25rem 0; box-sizing: border-box;}
+#contentBox:after{content:" "; display:block; width:100%; height:100%; clear:both;}
+#contentBox>h2{font-size: 30px; font-size: 1.875rem; margin-bottom: 60px; margin-bottom: 3.75rem; }
+.banner_01{width: 100%; height: 500px; position: absolute; left: 0; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  background-position: center; 
+  background-image: url("../../img/3p/ba_01.jpg");}
+.banner_01>span{display: block; width: 0; height: 0; overflow: hidden; position: absolute; z-index: -1;}
+#contentBox>ul{margin-top: 650px; margin-left: 20px; margin-left: 1.25rem;}
+#contentBox>ul>li{list-style:disc;}
+#contentBox>ul>li{margin-bottom: 20px; margin-bottom: 1.25rem; height: 20px; height: 1.25rem; font-size: 20px; font-size: 1.25rem; line-height: 32px; line-height: 2rem;}
+/* //contentBox */
+/* safeBox */
+#safeBox{width: 960px; width: 60rem; height: 2000px; margin: 0 auto; padding-bottom: 100px; padding-bottom: 6.25rem; box-sizing: border-box;}
+/*#safeBox:after{content:" "; display:block; width:100%; height:100%; clear:both; background-color: #acd;}*/
+#safeBox>h2{font-size: 30px; font-size: 1.875rem; margin-bottom: 60px; margin-bottom: 3.75rem; color: #f00;}
+.banner_02{width: 100%; height: 500px; position: absolute; left: 0;
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  background-position: center; 
+  background-image: url("../../img/3p/ba_02.jpg");}
+.banner_02>span{display: block; width: 0; height: 0; overflow: hidden; position: absolute; z-index: -1;}
+.r_bar{width: 100%; height: 20px; height: 1.25rem; background-color: #f00;}
+.r_bar>span{display: block; width: 0; height: 0; overflow: hidden; position: absolute; z-index: -1;}
+.d_mark{width: 150px; width: 9.375rem; height: 150px; height: 9.375rem; background-repeat: no-repeat; background-size: cover; background-position: center; background-image: url("../../img/3p/warning.svg"); float:right; margin-top: 50px; margin-top: 3.125rem; margin-right: 20px; margin-right: 1.25rem;}
+.d_mark>span{display: block; width: 0; height: 0; overflow: hidden; position: absolute; z-index: -1;}
+#safeBox>.card_01{margin-top: 700px;}
+#safeBox>.card_01>li{width: 410px; width: 25.625rem; height: 500px; height: 31.25rem; background-color: #D5E1ED; padding: 20px; padding: 1.25rem; box-sizing: border-box; float:left;}
+#safeBox>.card_01>li:nth-of-type(2n){margin-left: 140px; margin-left: 8.75rem;}
+#safeBox>.card_01>li:nth-of-type(3),
+#safeBox>.card_01>li:nth-of-type(4){margin-top: 80px; margin-top: 5rem;}
+#safeBox>.card_01>li>p:nth-of-type(1){font-size: 36px; font-size: 2.25rem; color: #19355B; font-weight: bold; margin-bottom: 32px; margin-bottom: 2rem; font-family: 'Verdana';}
+#safeBox>.card_01>li>p:nth-of-type(2){font-size: 26px; font-size: 1.625rem; font-weight: bold; margin-bottom: 40px; margin-bottom: 2.5rem;}
+#safeBox>.card_01>li>p:nth-of-type(3){font-size: 20px; font-size: 1.25rem; width: 150px; width: 9.375rem; float: left; line-height: 40px; line-height: 2.5rem;}
+#safeBox>.card_01>li>div{width: 200px; width: 12.5rem; height: 200px; height: 12.5rem; border-radius: 50%; background-color: #fff; float:right; background-repeat: no-repeat; background-size: 150px 150px; background-size: 9.375rem 9.375rem; background-position: center;}
+#safeBox>.card_01>li:nth-of-type(1)>div{background-image: url("../../img/3p/li_01.svg");}
+#safeBox>.card_01>li:nth-of-type(2)>div{background-image: url("../../img/3p/li_02.svg");}
+#safeBox>.card_01>li:nth-of-type(3)>div{background-image: url("../../img/3p/li_03.svg");}
+#safeBox>.card_01>li:nth-of-type(4)>div{background-image: url("../../img/3p/li_04.svg");}
+#safeBox>.card_01>li>div>span{display: block; width: 0; height: 0; overflow: hidden; position: absolute; z-index: -1;}
+/* 공 굴러다니는것. 나중에 하자! */
+/*@keyframes ani_01 {
+  0%{left: 0%;}
+  45%{left: 120%; top:20%;}
+
+  50%{left: 120%; top:70%;}
+  
+  95%{left: -20%; top:70%;}
+  
+  100%{left: -20%; top:20%;}
+ }
+ @keyframes ani_02 {
+  0%{right: 0%;}
+  45%{right: : 120%; top:70%;}
+
+  50%{right: 120%; top:20%;}
+  
+  95%{right: -20%; top:20%;}
+  
+  100%{right: -20%; top:70%;}
+ }
+.ball_01,.ball_02{position: fixed; width: 200px; height: 200px; border-radius: 50%;}
+.ball_01{left: 0; top: 20%; background-color: #f00; animation: ani_01 40s infinite normal;}
+.ball_02{right: 0; top: 70%; background-color: #19355B; animation: ani_02 40s infinite normal;}
+.ball_01>span,.ball_02>span{display: block; width: 0; height: 0; overflow: hidden; position: absolute; z-index: -1;}*/
+/* //safeBox */
+/* //main_content_03.css 

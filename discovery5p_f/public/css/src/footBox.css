@@ -1,0 +1,43 @@
+/* footBox.css */
+#footBox{width: 880px; height: 250px; background-color: #ddd; padding-top: 30px; box-sizing: border-box; margin: 0 auto;}
+.info_wrap{width: 540px; height: 225px; height: 14.0625rem; float: left; margin-right: 0;}
+.unb{width: 540px; height: auto; float:left; margin-top: 7px;}
+.unb>ul{width: 100%; height: 100%;}
+.unb>ul>li{width: auto; height: auto; float:left; margin-right: 40px;}
+.unb>ul>li>a{width: 100%; height: 100%;  font-size: 18px; line-height: 24px; line-height: 1.5rem; font-weight: bold;}
+.unb>ul>li:nth-child(4){margin-right: 0;}
+
+.adress{width: 366px; width: 22.875rem; height: 60px; height: 3.75rem; margin-top: 83px; float: left;}
+.adress>ul{width: 100%; height: 100%;}
+.adress>ul>li{width: 100%; height: 50%;float:left;}
+.adress>ul>li>a{width: 100%; height: 100%;  font-size: 16px; font-size: 1rem; line-height: 16px; line-height: 1rem; }
+
+.info{width: 335px; width: 20.9375rem; height: 80px; height: 5rem; margin-top: 30px; float:right;}
+.info>ul{width: 100%; height: 100%;}
+.info>ul>li{height: 30px; float:left;}
+.info>ul>li>a{width: 100%; height: 100%; font-size: 16px; font-size: 1rem; float:left;}
+
+.logo_wrap{width: 340px; width: 21.25rem; height: auto; float: right;}
+.logo_wrap>ul{width: 100%; height: 100%;}
+.logo_wrap>ul>li{width: 80px; width: 5rem; height: 80px; height: 5rem;  line-height: 80px;  line-height: 5rem; float: left;}
+.logo_wrap>ul>li>a{display: block; width: 100%; height: 100%; color: #000;}
+.logo_wrap>ul>li>a>i{display: block; width: 100%; height: 100%; font-size: 80px; font-size: 5rem; color: inherit;}
+.logo_wrap>ul>li:nth-child(1){margin-right: 40px;}
+.logo_wrap>ul>li:nth-child(2){margin-right: 40px;}
+.logo_wrap>ul>li:nth-child(3){margin-top: -7px;}
+
+
+.unb>ul>li>a:hover{color: #19355B; font-weight: bold;}
+.unb>ul>li>a:active{color: #19355B; font-weight: bold;}
+.unb>ul>li>a:focus{color: #19355B; font-weight: bold;}
+.adress>ul>li>a:hover{color: #000;}
+.adress>ul>li>a:focus{color: #000;}
+.info>ul>li>a:hover{color: #000;}
+.info>ul>li>a:focus{color: #000;}
+.logo_wrap>ul>li:nth-of-type(1)>a>i:hover{color:#DB2C74;}
+.logo_wrap>ul>li:nth-of-type(2)>a>i:hover{color:#3F5D9B;}
+.logo_wrap>ul>li:nth-of-type(3)>a>i:hover{color:#FD0003;}
+.logo_wrap>ul>li:nth-of-type(1)>a:focus{color:#DB2C74;}
+.logo_wrap>ul>li:nth-of-type(2)>a:focus{color:#3F5D9B;}
+.logo_wrap>ul>li:nth-of-type(3)>a:focus{color:#FD0003;}
+/* //footBox.css */
